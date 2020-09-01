@@ -1,0 +1,1 @@
+ALTER TABLE scan_shipped_orders ADD INDEX (tracking_number),

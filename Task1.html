@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Task 1</title>
+        <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.5.1/dist/jquery.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/gh/select2/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/gh/select2/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+        <script>
+            let codes = []
+            $(document).ready(function() {
+                for (let code of codes) {
+                    code()
+                }
+            });
+        </script>
+        <style>
+            select {
+                width: 200px;
+            }
+
+            .js-data-1-ajax-4 + .select2 .select2-selection__choice[title="Selected"] .select2-selection__choice__remove {
+                display: none;
+            }
+
+            .js-data-1-ajax-4 + .select2 .select2-selection__choice[title="Shipping"] .select2-selection__choice__remove {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>1. Select</h3>
+        <select class="js-data-1-ajax-1"></select>
+        <script>
+            codes.push(function(){
+                $('.js-data-1-ajax-1').select2({
+                    minimumResultsForSearch: Infinity,
+                    ajax: {
+                        url: './task1values.json',
+                        dataType: 'json'
+                    }
+                });
+            });
+        </script>
+
+        <hr>
+
+        <h3>2. Multi-select</h3>
+        <select class="js-data-1-ajax-2" multiple="multiple"></select>
+        <script>
+            codes.push(function(){
+                $('.js-data-1-ajax-2').select2({
+                    minimumResultsForSearch: Infinity,
+                    ajax: {
+                        url: './task1values.json',
+                        dataType: 'json'
+                    }
+                });
+            });
+        </script>
+
+        <hr>
+
+        <h3>3. Preselected multi-select</h3>
+        <select class="js-data-1-ajax-3" multiple="multiple">
+            <option value="4" selected="selected">Selected</option>
+            <option value="1" selected="selected">Shipping</option>
+        </select>
+        <script>
+            codes.push(function(){
+                $('.js-data-1-ajax-3').select2({
+                    minimumResultsForSearch: Infinity,
+                    ajax: {
+                        url: './task1values.json',
+                        dataType: 'json'
+                    }
+                })
+                $('.js-data-1-ajax-3').val(['4', '1']).trigger('change');
+            });
+        </script>
+
+        <hr>
+
+        <h3>4. Disabled preselected multi-select</h3>
+        <select class="js-data-1-ajax-4" multiple="multiple">
+            <option value="4" selected="selected" disabled="disabled">Selected</option>
+            <option value="1" selected="selected" disabled="disabled">Shipping</option>
+        </select>
+        <script>
+            codes.push(function(){
+                $('.js-data-1-ajax-4').select2({
+                    minimumResultsForSearch: Infinity,
+                    ajax: {
+                        url: './task1values.json',
+                        dataType: 'json'
+                    }
+                })
+            });
+        </script>
+
+        <hr>
+
+        <h3>5. Custom allowed multi-select</h3>
+        <select class="js-data-1-ajax-5" multiple="multiple">
+        </select>
+        <script>
+            codes.push(function(){
+                $('.js-data-1-ajax-5').select2({
+                    tags: true,
+                    minimumResultsForSearch: Infinity,
+                    ajax: {
+                        url: './task1values.json',
+                        dataType: 'json'
+                    }
+                })
+            });
+        </script>
+
+        <hr>
+
+    </body>
+</html>

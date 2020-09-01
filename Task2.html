@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Task 2</title>
+        <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.5.1/dist/jquery.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/gh/select2/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/gh/select2/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/font-awesome@4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+            form {
+                width: 500px;
+                margin:50px;
+            }
+
+            .select2-result-repository__name {
+                font-weight: bold;
+            }
+
+            .select2-result-repository__company {
+                font-weight: bold;
+                display:block;
+            }
+
+            .select2-result-repository__company + div .select2-result-repository__name {
+                font-weight: unset;
+            }
+
+        </style>
+
+    </head>
+    <body>
+
+    <form>
+        <div class="form-group">
+            <label for="inputCompany">Company</label>
+            <select class="form-control" id="inputCompany"></select>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputFName">First Name</label>
+                <select class="form-control" id="inputFName" ></select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputLName">Last Name</label>
+                <select class="form-control" id="inputLName" ></select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputAddress1">Address 1</label>
+                <input type="text" class="form-control" id="inputAddress1" >
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputAddress2">Address 2</label>
+                <input type="text" class="form-control" id="inputAddress2" >
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" id="inputCity" >
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputState">State</label>
+                <input type="text" class="form-control" id="inputState" >
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputZip">ZIP</label>
+                <input type="text" class="form-control" id="inputZip" >
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputPhone">Phone</label>
+                <input type="text" class="form-control" id="inputPhone" >
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputEmail">Email</label>
+                <input type="email" class="form-control" id="inputEmail" >
+            </div>
+        </div>
+    </form>
+
+
+    <script>
+        populating = false;
+
+        $(document).ready(function() {
+            $('#inputCompany').select2({
+                ajax: {
+                    dataType: 'json',
+                    url: 'task2data.php',
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                            type: 'company'
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                },
+                placeholder: 'Type for Search ..',
+                minimumInputLength: 1,
+                templateResult: formatContact,
+                templateSelection: function(contact) {return formatContactSelection(contact, 'company')},
+            });
+
+            $('#inputFName').select2({
+                ajax: {
+                    dataType: 'json',
+                    url: 'task2data.php',
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                            type: 'fname'
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                },
+                placeholder: 'Type for Search ..',
+                minimumInputLength: 1,
+                templateResult: formatContact,
+                templateSelection: function(contact) {return formatContactSelection(contact, 'fname')},
+            });
+
+            $('#inputLName').select2({
+                ajax: {
+                    dataType: 'json',
+                    url: 'task2data.php',
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                            type: 'lname'
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                },
+                placeholder: 'Type for Search ..',
+                minimumInputLength: 1,
+                templateResult: formatContact,
+                templateSelection: function(contact) {return formatContactSelection(contact, 'lname')},
+            });
+
+
+            function formatContact (contact) {
+                if (contact.loading) {
+                    return contact.text;
+                }
+
+                var $container = $(
+                    "<span class='select2-result-repository clearfix'>" +
+                    "<span class='select2-result-repository__name'></span>" +
+                    " (<span class='select2-result-repository__address'></span>)" +
+                    "</div>"
+                );
+
+                if (contact.id === 0) {
+                    $container.find(".select2-result-repository__name").text(contact.value);
+                    $container.find(".select2-result-repository__address").text('New Value');
+                    return $container;
+                }
+
+                if (contact.company) {
+                    var $container = $(
+                        "<span class='select2-result-repository clearfix'>" +
+                        "<span class='select2-result-repository__company'></span>" +
+                        "<div><i class=\"fa fa-user fa-fw\">" +
+                        "</i><span class='select2-result-repository__name'></span></div>" +
+                        " (<span class='select2-result-repository__address'></span>)" +
+                        "</div>"
+                    );
+                }
+
+                $container.find(".select2-result-repository__company").text(contact.company);
+                $container.find(".select2-result-repository__name").text(contact.fname + ' ' + contact.lname);
+                $container.find(".select2-result-repository__address").text(
+                    contact.address1 + ', '+
+                    contact.city + ', ' +
+                    contact.state + ', ' +
+                    contact.zip + ', '
+                );
+
+
+                return $container;
+            }
+
+            function formatContactSelection (contact, type) {
+                if (contact.id === "0") {
+                    return contact.value
+                }
+
+                if (contact.text) {
+                    return contact.text;
+                }
+
+                if(!populating) {
+                    populateForm(contact);
+                }
+
+                return contact[type];
+            }
+
+            function populateForm(contact) {
+                populating = true;
+                if ($('#inputCompany').find("option[value='" + contact.id + "']").length) {
+                    $('#inputCompany').val(contact.id).trigger('change');
+                } else {
+                    // Create a DOM Option and pre-select by default
+                    var newOptionCompany = new Option(contact.company, contact.id, true, true);
+                    // Append it to the select
+                    $('#inputCompany').append(newOptionCompany).trigger('change');
+                }
+
+                if ($('#inputFName').find("option[value='" + contact.id + "']").length) {
+                    $('#inputFName').val(contact.id).trigger('change');
+                } else {
+                    // Create a DOM Option and pre-select by default
+                    var newOptionFName = new Option(contact.fname, contact.id, true, true);
+                    // Append it to the select
+                    $('#inputFName').append(newOptionFName).trigger('change');
+                }
+
+                if ($('#inputLName').find("option[value='" + contact.id + "']").length) {
+                    $('#inputLName').val(contact.id).trigger('change');
+                } else {
+                    // Create a DOM Option and pre-select by default
+                    var newOptionLName = new Option(contact.lname, contact.id, true, true);
+                    // Append it to the select
+                    $('#inputLName').append(newOptionLName).trigger('change');
+                }
+
+
+                $('#inputAddress1').val(contact.address1);
+                $('#inputAddress2').val(contact.address2);
+                $('#inputCity').val(contact.city);
+                $('#inputState').val(contact.state);
+                $('#inputZip').val(contact.zip);
+                $('#inputPhone').val(contact.phone);
+                $('#inputEmail').val(contact.email);
+                populating = false;
+
+            }
+        });
+    </script>
+
+    </body>
+</html>

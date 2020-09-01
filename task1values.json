@@ -1,0 +1,32 @@
+{
+  "results": [
+    {
+      "id": 1,
+      "text": "Shipping"
+    },
+    {
+      "id": 2,
+      "text": "Billing"
+    },
+    {
+      "id": 3,
+      "text": "Service"
+    },
+    {
+      "id": 4,
+      "text": "Selected"
+    },
+    {
+      "id": 5,
+      "text": "Original"
+    },
+    {
+      "id": 6,
+      "text": "Home"
+    },
+    {
+      "id": 7,
+      "text": "Work"
+    }
+  ]
+}
