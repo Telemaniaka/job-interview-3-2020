@@ -14,7 +14,7 @@ Use [composer](https://getcomposer.org/) to install the needed dependencies.
 composer install
 ```
 
-Fill in your Mailgun credentials in `src/Config/conf.php`
+Fill in your BigCommerce credentials in `src/Config/conf.php`
 ## Usage
 
 Point webserver root towards the `public` folder 
