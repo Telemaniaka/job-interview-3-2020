@@ -209,29 +209,30 @@
 
             function populateForm(contact) {
                 populating = true;
-                if ($('#inputCompany').find("option[value='" + contact.id + "']").length) {
-                    $('#inputCompany').val(contact.id).trigger('change');
+                if ($('#inputCompany').find("option[value='" + contact.company + "']").length) {
+                    $('#inputCompany').val(contact.company).trigger('change');
                 } else {
+                    if(typeof(contact.company)=='undefined') contact.company = '';
                     // Create a DOM Option and pre-select by default
-                    var newOptionCompany = new Option(contact.company, contact.id, true, true);
+                    var newOptionCompany = new Option(contact.company, contact.company, true, true);
                     // Append it to the select
                     $('#inputCompany').append(newOptionCompany).trigger('change');
                 }
 
-                if ($('#inputFName').find("option[value='" + contact.id + "']").length) {
-                    $('#inputFName').val(contact.id).trigger('change');
+                if ($('#inputFName').find("option[value='" + contact.fname + "']").length) {
+                    $('#inputFName').val(contact.fname).trigger('change');
                 } else {
                     // Create a DOM Option and pre-select by default
-                    var newOptionFName = new Option(contact.fname, contact.id, true, true);
+                    var newOptionFName = new Option(contact.fname, contact.fname, true, true);
                     // Append it to the select
                     $('#inputFName').append(newOptionFName).trigger('change');
                 }
 
-                if ($('#inputLName').find("option[value='" + contact.id + "']").length) {
-                    $('#inputLName').val(contact.id).trigger('change');
+                if ($('#inputLName').find("option[value='" + contact.lname + "']").length) {
+                    $('#inputLName').val(contact.lname).trigger('change');
                 } else {
                     // Create a DOM Option and pre-select by default
-                    var newOptionLName = new Option(contact.lname, contact.id, true, true);
+                    var newOptionLName = new Option(contact.lname, contact.lname, true, true);
                     // Append it to the select
                     $('#inputLName').append(newOptionLName).trigger('change');
                 }
